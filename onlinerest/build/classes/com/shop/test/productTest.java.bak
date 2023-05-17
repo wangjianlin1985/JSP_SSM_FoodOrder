@@ -1,0 +1,49 @@
+// 
+// 
+// 
+
+package com.shop.test;
+
+import java.util.Iterator;
+import java.util.List;
+import com.shop.po.CategoryExample;
+import com.shop.po.Category;
+import com.shop.mapper.CategoryMapper;
+import org.junit.Test;
+import com.shop.mapper.ProductMapper;
+import org.junit.Before;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
+
+public class productTest
+{
+    private ApplicationContext applicationContext;
+    
+    @Before
+    public void before() {
+        this.applicationContext = (ApplicationContext)new ClassPathXmlApplicationContext("classpath:spring/applicationContext-dao.xml");
+    }
+    
+    @Test
+    public void test() throws Exception {
+        final ProductMapper productMapper = (ProductMapper)this.applicationContext.getBean((Class)ProductMapper.class);
+    }
+    
+    @Test
+    public void testselectByExample() throws Exception {
+        final CategoryMapper categoryMapper = (CategoryMapper)this.applicationContext.getBean((Class)CategoryMapper.class);
+        final Category category = new Category();
+        category.setCname("123");
+        categoryMapper.insert(category);
+        final CategoryExample example = new CategoryExample();
+        final List<Category> list = categoryMapper.selectByExample(example);
+        for (final Category categoryList : list) {
+            System.out.println(categoryList.getCname());
+        }
+    }
+    
+    @Test
+    public void testCategoryService() throws Exception {
+        final CategoryMapper categoryMapper = (CategoryMapper)this.applicationContext.getBean((Class)CategoryMapper.class);
+    }
+}
